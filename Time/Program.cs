@@ -8,7 +8,7 @@ namespace Time
         public int Hours { get; set; }
         public int Minutes { get; set; }
         public int Seconds { get; set; }
-        public int Milliseconds { get; set; }
+        public int Hundreths { get; set; }
         public Time(int Hours, int Minutes)
         {
             this.Hours = Hours;
@@ -20,30 +20,35 @@ namespace Time
             this.Minutes = Minutes;
             this.Seconds = Seconds;
         }
-        public Time(int Hours, int Minutes, int Seconds, int Milliseconds)
+        public Time(int Hours, int Minutes, int Seconds, int Hundreths)
         {
             this.Hours = Hours;
             this.Minutes = Minutes;
             this.Seconds = Seconds;
-            this.Milliseconds = Milliseconds;
+            this.Hundreths = Hundreths;
         }
         public Time(string time)
         {
             try
             {
-                var values = time.Split(';').Select(Int32.Parse).ToList();
+                var values = time.Split(':').Select(Int32.Parse).ToList();
                 Hours = values[0];
                 Minutes = values[1];
                 Seconds = values[2];
-                Milliseconds = values[3];
+                Hundreths = values[3];
             } catch (Exception e)
             {
                 Console.WriteLine("Invalid format");
             }
         }
+        public static int HundrethsToMilliseconds(int hundreths)
+        {
+            return hundreths * 10;
+        }
         public static int SecondsToMilliseconds(int seconds)
         {
-            return seconds * 1000;
+            int secondsToHundreths = seconds * 100;
+            return HundrethsToMilliseconds(secondsToHundreths);
         }
         public static int MinutesToMilliseconds(int minutes)
         {
@@ -57,21 +62,22 @@ namespace Time
         }
         public static int TimeToMilliseconds(Time time)
         {
-            return HoursToMilliseconds(time.Hours)     + 
-                   MinutesToMilliseconds(time.Minutes) + 
-                   SecondsToMilliseconds(time.Seconds) + 
-                   time.Milliseconds;
+            return HoursToMilliseconds(time.Hours) +
+                   MinutesToMilliseconds(time.Minutes) +
+                   SecondsToMilliseconds(time.Seconds) +
+                   HundrethsToMilliseconds(time.Hundreths);
         }
         public static Time MillisecondsToTime(int n)
         {
-            int milliseconds = n % 1000;
-            n /= 1000;
+            n /= 10;
+            int hundreths = n % 100;
+            n /= 100;
             int seconds = n % 60;
             n /= 60;
             int minutes = n % 60;
             n /= 60;
             int hours = n;
-            return new Time(hours, minutes, seconds, milliseconds);
+            return new Time(hours, minutes, seconds, hundreths);
         }
         public static Time operator + (Time t1, Time t2)
         {
@@ -114,7 +120,11 @@ namespace Time
     {
         static void Main(string[] args)
         {
-            
+            Time a = new Time("10:30:25:75");
+            Time b = new Time("47:50:40:60");
+            Time c = a + b;
+            Console.WriteLine("" + c.Hours + " " + c.Minutes + " " + c.Seconds + " " + c.Hundreths);
+            Console.ReadKey();
         }
     }
 }
