@@ -52,6 +52,10 @@ namespace Rational
         {
             return new Rational(a.Numerator * b.Numerator, a.Denominator * b.Denominator);
         }
+        public static Rational operator / (Rational a, Rational b)
+        {
+            return a * new Rational(b.Denominator, b.Numerator);
+        }
         public static Rational operator ^ (Rational a, int n)
         {
             Rational result = a;
@@ -90,9 +94,8 @@ namespace Rational
     {
         static void Main(string[] args)
         {
-            Rational a = new Rational(2, 5);
-            Rational b = new Rational(4, 8);
-            Console.WriteLine(a + b);
+            Rational a = new Rational(1, 2);
+            Console.WriteLine(a * a);
         }
     }
 }
