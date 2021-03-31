@@ -1,10 +1,29 @@
 ﻿using System;
+using System.Text;
 
 namespace Complex
 {
     class Complex
     {
         public float Real, Imaginary;
+        public override string ToString()
+        {
+            StringBuilder s = new StringBuilder();
+            if (this.Imaginary > 0)
+            {
+                s.AppendFormat("{0:0.00} + {1:0.00}i", this.Real, this.Imaginary);
+            } else
+            {
+                if (this.Imaginary < 0)
+                {
+                    s.AppendFormat("{0:0.00} - {1:0.00}i", this.Real, Math.Abs(this.Imaginary));
+                } else
+                {
+                    s.AppendFormat("{0:0.00}", this.Real);
+                }
+            }
+            return s.ToString();
+        }
         public Complex()
         {
 
@@ -44,17 +63,14 @@ namespace Complex
             double radius = Math.Sqrt(this.Real * this.Real + this.Imaginary * this.Imaginary);
             double thetaInRadians = Math.Atan2(this.Imaginary, this.Real);
             double thetaInDegrees = (180 / Math.PI) * thetaInRadians;
-            Console.WriteLine($"x = {radius}(cos {thetaInDegrees}° + i sin {thetaInDegrees}°)");
+            Console.WriteLine($"x = {String.Format("{0:0.00}", radius)}(cos {String.Format("{0:0.00}", thetaInDegrees)}° + i sin {String.Format("{0:0.00}", thetaInDegrees)}°)");
         }
     }
     class Program
     {
         static void Main(string[] args)
         {
-            Complex a = new Complex(-7);
-            Complex b = new Complex(1, 1);
-            Complex c = a * b;
-            Complex d = a ^ 5;
+            Complex a = new Complex(-7, -3);
             a.PrintTrigonometricForm();
             Console.ReadKey();
         }

@@ -6,6 +6,10 @@ namespace Rational
     {
         public int Numerator;
         public int Denominator;
+        public override string ToString()
+        {
+            return this.Numerator + "/" + this.Denominator;
+        }
         public Rational()
         {
 
@@ -88,8 +92,7 @@ namespace Rational
         {
             Rational a = new Rational(2, 5);
             Rational b = new Rational(4, 8);
-            bool equal = a < b;
-            Console.WriteLine("" + equal);
+            Console.WriteLine(a + b);
         }
     }
 }
