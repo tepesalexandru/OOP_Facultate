@@ -105,8 +105,8 @@ namespace NumarMare
     {
         static NumarMare NthFibonacciNumber(int n)
         {
-            NumarMare a = new NumarMare(new List<int> { 1 });
-            NumarMare b = new NumarMare(new List<int> { 1 });
+            NumarMare a = new NumarMare(1);
+            NumarMare b = new NumarMare(1);
             NumarMare c = new NumarMare();
             if (n <= 2) return a;
             for (int i = 3; i <= n; i++)
