@@ -27,6 +27,14 @@ namespace NumarMare
                 k /= 10;
             } while (k > 0);
         }
+        public NumarMare(string k)
+        {
+            int len = k.Length;
+            for (int i = len - 1; i >= 0; i--)
+            {
+                digits.Add(k[i] - '0');
+            }
+        }
         public NumarMare(List<int> newDigits)
         {
             digits.AddRange(newDigits);
@@ -128,6 +136,9 @@ namespace NumarMare
         }
         static void Main(string[] args)
         {
+            NumarMare a = new NumarMare("128");
+            NumarMare b = new NumarMare(128);
+            Console.WriteLine(a + b);
             Console.WriteLine(NthFibonacciNumber(100));
             Console.WriteLine(BigFactorial(1000));
         }
